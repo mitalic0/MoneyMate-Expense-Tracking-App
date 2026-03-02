@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+<form method="GET" class="mb-3">
+  <input type="month" name="month" value="{{ selected_month }}" class="form-control w-25 d-inline">
+  <button class="btn btn-secondary btn-sm">Filter</button>
+</form>
+
+<div class="card p-3 mb-4 shadow-sm">
+  <h5>Total Spending</h5>
+  <h3>₹ {{ total }}</h3>
+</div>
+
+<!-- Charts Row -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="card p-3 shadow-sm">
+      <h5>Category Breakdown</h5>
+      <canvas id="categoryChart"></canvas>
+    </div>
+  </div>
+
+  <div class="col-md-6">
+    <div class="card p-3 shadow-sm">
+      <h5>Payment Method</h5>
+      <canvas id="paymentChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<div class="row mt-4">
+  <div class="col-md-12">
+    <div class="card p-3 shadow-sm">
+      <h5>Monthly Trend</h5>
+      <canvas id="trendChart"></canvas>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Expenses Table -->
+<div class="card p-3 shadow-sm mt-4">
+  <h5>Recent Expenses</h5>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in expenses %}
+      <tr>
+        <td>₹ {{ e.amount }}</td>
+        <td>{{ e.category }}</td>
+        <td>{{ e.description }}</td>
+        <td>{{ e.date }}</td>
+        <td>
+          <a href="/edit/{{ e.id }}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="/delete/{{ e.id }}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- Charts Script -->
+<script>
+new Chart(document.getElementById('categoryChart'), {
+    type: 'pie',
+    data: {
+        labels: {{ category_labels|tojson }},
+        datasets: [{
+            data: {{ category_values|tojson }}
+        }]
+    }
+});
+
+new Chart(document.getElementById('paymentChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ payment_labels|tojson }},
+        datasets: [{
+            data: {{ payment_values|tojson }}
+        }]
+    }
+});
+
+new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+        labels: {{ trend_labels|tojson }},
+        datasets: [{
+            label: "Monthly Spending",
+            data: {{ trend_values|tojson }}
+        }]
+    }
+});
+</script>
+
+{% endblock %}

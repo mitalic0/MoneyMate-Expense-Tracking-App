@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h3 class="mb-3">All Expenses</h3>
+
+<form method="GET" class="mb-3">
+  <input type="month" name="month" value="{{ selected_month }}" class="form-control w-25 d-inline">
+  <button class="btn btn-secondary btn-sm">Filter</button>
+</form>
+
+<div class="d-flex justify-content-between mb-3">
+  <h3>All Expenses</h3>
+  <a href="/export" class="btn btn-outline-success">Export CSV</a>
+</div>
+
+<div class="card p-3 shadow-sm">
+  <h5>Total: ₹ {{ total }}</h5>
+
+  <table class="table table-striped mt-3">
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Category</th>
+        <th>Description</th>
+        <th>Date</th>
+        <th>Payment</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for e in expenses %}
+      <tr>
+        <td>₹ {{ e.amount }}</td>
+        <td>{{ e.category }}</td>
+        <td>{{ e.description }}</td>
+        <td>{{ e.date }}</td>
+        <td>{{ e.payment_method }}</td>
+        <td>
+          <a href="/edit/{{ e.id }}" class="btn btn-sm btn-warning">Edit</a>
+          <a href="/delete/{{ e.id }}" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}

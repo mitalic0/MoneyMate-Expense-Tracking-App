@@ -75,8 +75,11 @@ http://127.0.0.1:5000
 ###  Recent Expense
 ![Recent Expense](screenshots/recent_expense.png)
 
-###  Add Expense
+###  Expenses
 ![Expense](screenshots/expenses.png)
+
+###  Add Expense
+![Expense](screenshots/add_expense.png)
 
 
 ---

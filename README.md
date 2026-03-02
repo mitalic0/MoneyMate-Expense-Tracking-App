@@ -78,8 +78,6 @@ http://127.0.0.1:5000
 ###  Add Expense
 ![Expense](screenshots/expenses.png)
 
-###  Expense Analytics
-![Add Expense](screenshots/analytics.png)
 
 ---
 
